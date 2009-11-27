@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="label_add">Add</string>
+    <string name="label_post">Post</string>
+    <string name="label_preferences">Preferences</string>
+    <string name="label_new">New</string>
+    <string name="label_bookshelf">Bookshelf</string>
+    <string name="label_select">Select</string>
+    <string name="label_delete">Delete</string>
+    <string name="label_edit">Edit</string>
+    
+    <string name="message_processing">In Processing...</string>
+    <string name="message_loading">Loading...</string>
+    <string name="message_posting">Posting...</string>
+    <string name="message_no_image">No image.</string>
+    <string name="message_error_occurred">Error occurred.</string>
+    <string name="message_book_not_found_for_ISBN">Book not Found for ISBN:</string>
+    <string name="message_book_not_found">Book not Found. (Some error occured, maybe)</string>
+	<string name="message_successfully_posted">Successfully posted: </string>
+	<string name="message_error_occurred_in_posting_to_tumblr">Error occuered in posting to Tumblr.</string>
+
+    <string name="app_name">ShotQuote</string>
+    <string name="hello">Hi, Welcome to ShotQuote on Android.</string>
+    <string name="share">SQ Tumblr</string>
+    <string name="sharing_aggregate_title">ShotQuote Tumblr</string>
+    <string name="bookshelf_title">ShotQuote Bookshelf</string>
+
+    <string name="posting_image">Posting Image</string>
+    <string name="select_image">pick</string>
+    <string name="edit_image">crop</string>
+    <string name="view_image">view</string>
+
+    <string name="page_no_text">Page</string>
+    <string name="page_no_hint">Page number of the quoting text.</string>
+    <string name="location_in_page_text">Location in the page</string>
+    <string name="select_location">pick</string>
+    <string name="location_in_page_hint">Location of the quote.</string>
+
+    <string name="title_hint">[Title of the book]</string>
+    <string name="authors_hint">[Authors]</string>
+    <string name="isbn_hint">[ISBN code]</string>
+    <string name="post_quote">Post Quote</string>
+
+    <string name="capture">SQ Capture</string>
+    <string name="bookshelf_app">SQ Bookshelf</string>
+    <string name="shot">Shot!</string>
+    <string name="quote_text">Quote</string>
+    <string name="comment_text">Comment</string>
+    <string name="book_title_text">Book</string>
+    <string name="bookshelf">Your Bookshelf</string>
+</resources>

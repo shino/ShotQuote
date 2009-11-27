@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources xml:space="preserve">
+  <string-array name="locations_in_page">
+    <item>upper part</item>
+    <item>middle</item>
+    <item>lower part</item>
+    <item>right side</item>
+    <item>left side</item>
+    <item>1st paragraph</item>
+    <item>2nd paragraph</item>
+    <item>3rd paragraph</item>
+    <item>4th paragraph</item>
+    <item>5th paragraph</item>
+  </string-array>
+</resources>

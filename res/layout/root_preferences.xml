@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="Tumblr account 1">
+        <CheckBoxPreference
+            android:key="tumblr1_enabled"
+            android:title="enabled"
+            android:summary="Enable this account to post"
+            android:dialogTitle="Enabled"
+            android:defaultValue="true"
+        />        
+        <EditTextPreference
+            android:key="tumblr1_email"
+            android:title="e-mail"
+            android:summary="Your e-mail address to use Tumblr"
+            android:dialogTitle="E-mail"
+        />
+        <EditTextPreference
+            android:key="tumblr1_password"
+            android:title="Password"
+            android:summary="Your password address to use Tumblr"
+            android:dialogTitle="Password"
+            android:password="true"
+        />
+    </PreferenceCategory>
+    
+    <PreferenceCategory android:title="Tumblr account 2">
+        <CheckBoxPreference
+            android:key="tumblr2_enabled"
+            android:title="enabled"
+            android:summary="Enable this account to post"
+            android:dialogTitle="Enabled"
+            android:defaultValue="false"
+        />        
+        <EditTextPreference
+            android:key="tumblr2_email"
+            android:title="e-mail"
+            android:summary="Your e-mail address to use Tumblr"
+            android:dialogTitle="E-mail"
+        />
+        <EditTextPreference
+            android:key="tumblr2_password"
+            android:title="Password"
+            android:summary="Your password address to use Tumblr"
+            android:dialogTitle="Password"
+            android:password="true"
+        />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="Post settings">
+        <EditTextPreference
+            android:key="post_generator"
+            android:title="Post generator"
+            android:summary="Generator value in posting to Tumblr"
+            android:dialogTitle="Post generator"
+            android:defaultValue="ShotQuote Android"
+        />
+    </PreferenceCategory>
+ </PreferenceScreen>

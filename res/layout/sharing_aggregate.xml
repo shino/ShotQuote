@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="4dp"
+        android:paddingLeft="4dp"
+        android:paddingRight="8dp">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:scrollbarAlwaysDrawVerticalTrack="true">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/posting_image"
+                android:paddingRight="8dp"
+                android:textAppearance="@style/label_text_appearance" />
+
+            <Button
+                android:text="@string/select_image"
+                android:id="@+id/select_image_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <Button
+                android:text="@string/edit_image"
+                android:id="@+id/edit_image_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <Button
+                android:text="@string/view_image"
+                android:id="@+id/view_image_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <ImageView
+            android:id="@+id/captured_image_view"
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:minHeight="50dp"
+            android:minWidth="50dp"
+            android:contentDescription="Image to post."
+            android:scaleType="center" />
+
+        <TextView
+            android:text="@string/page_no_text"
+            android:id="@+id/page_no_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/label_text_appearance" />
+        <EditText
+            android:text=""
+            android:id="@+id/page_no_edit_text"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:hint="@string/page_no_hint">
+        </EditText>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:scrollbarAlwaysDrawVerticalTrack="true">
+            <TextView
+                android:text="@string/location_in_page_text"
+                android:id="@+id/location_in_page_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/label_text_appearance" />
+            <Button
+                android:text="@string/select_location"
+                android:id="@+id/select_location_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <EditText
+            android:id="@+id/location_in_page_edit_text"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:hint="@string/location_in_page_hint">
+        </EditText>
+
+        <TextView
+            android:text="@string/book_title_text"
+            android:id="@+id/book_title_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/label_text_appearance" />
+        <Button
+            android:text="Select book"
+            android:id="@+id/select_book_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="4dp"
+            android:paddingRight="0dp">
+            <TextView
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/book_item_title"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/title_hint"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="#ffffffff" />
+            <TextView
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/book_item_authors"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="@string/authors_hint"
+                android:textSize="16sp"
+                android:paddingLeft="10sp" />
+            <TextView
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/book_item_isbn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="@string/isbn_hint"
+                android:textSize="12sp"
+                android:textStyle="italic"
+                android:paddingLeft="10sp" />
+        </LinearLayout>
+
+        <Button
+            android:text="@string/post_quote"
+            android:id="@+id/post_shotquote_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+</ScrollView>
