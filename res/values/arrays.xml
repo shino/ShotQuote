@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+    * Copyright 2009 Shun'ichi Shinohara
+    * Distributed under the GNU GPL v3 or later. For full terms see the file LICENSE.
+-->
+
 <resources xml:space="preserve">
   <string-array name="locations_in_page">
     <item>upper part</item>

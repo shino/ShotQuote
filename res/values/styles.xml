@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+    * Copyright 2009 Shun'ichi Shinohara
+    * Distributed under the GNU GPL v3 or later. For full terms see the file LICENSE.
+-->
+
 <resources>
   <style name="MyTheme" parent="android:Theme.Light">
     <item name="android:textAppearance">@style/label_text_appearance</item>
