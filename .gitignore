@@ -1,2 +1,7 @@
 /bin
 /gen
+# backup files
+*~
+\#*\#
+# svn files
+.svn
