@@ -29,7 +29,6 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 public class ShotQuoteAggregate extends Activity 
@@ -43,7 +42,6 @@ public class ShotQuoteAggregate extends Activity
 	private TextView quoteTextView;
 
 	private Button imageCaptureViaFileButton;
-	private ImageView imageView;
 	
     /** Called when the activity is first created. */
     @Override
@@ -55,7 +53,6 @@ public class ShotQuoteAggregate extends Activity
 		imageCaptureViaFileButton = (Button) findViewById(R.id.Button02);
 		imageCaptureViaFileButton.setOnClickListener(this);
 		quoteTextView = (TextView) findViewById(R.id.QuoteTextView);
-		imageView = (ImageView) findViewById(R.id.ImageView01);
     }
 
 	public void onClick(View target) {
