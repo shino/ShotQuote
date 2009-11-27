@@ -20,13 +20,13 @@
     <string name="message_no_image">No image.</string>
     <string name="message_error_occurred">Error occurred.</string>
     <string name="message_book_not_found_for_ISBN">Book not Found for ISBN:</string>
-    <string name="message_book_not_found">Book not Found. (Some error occured, maybe)</string>
+    <string name="message_book_not_found">Book not Found. (Some error occurred, maybe)</string>
 	<string name="message_successfully_posted">Successfully posted: </string>
-	<string name="message_error_occurred_in_posting_to_tumblr">Error occuered in posting to Tumblr.</string>
+	<string name="message_error_occurred_in_posting_to_tumblr">Error occurred in posting to Tumblr.</string>
 
     <string name="app_name">ShotQuote</string>
     <string name="hello">Hi, Welcome to ShotQuote on Android.</string>
-    <string name="share">SQ Tumblr</string>
+    <string name="share">ShotQuote</string>
     <string name="sharing_aggregate_title">ShotQuote Tumblr</string>
     <string name="bookshelf_title">ShotQuote Bookshelf</string>
 
