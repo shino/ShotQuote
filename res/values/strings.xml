@@ -30,14 +30,14 @@
     <string name="sharing_aggregate_title">ShotQuote Tumblr</string>
     <string name="bookshelf_title">ShotQuote Bookshelf</string>
 
-    <string name="posting_image">Posting Image</string>
+    <string name="posting_image"><u>Posting Image</u></string>
     <string name="select_image">pick</string>
     <string name="edit_image">crop</string>
     <string name="view_image">view</string>
 
-    <string name="page_no_text">Page</string>
+    <string name="page_no_text"><u>Page</u></string>
     <string name="page_no_hint">Page number of the quoting text.</string>
-    <string name="location_in_page_text">Location in the page</string>
+    <string name="location_in_page_text"><u>Location in the page</u></string>
     <string name="select_location">pick</string>
     <string name="location_in_page_hint">Location of the quote.</string>
 
@@ -51,6 +51,6 @@
     <string name="shot">Shot!</string>
     <string name="quote_text">Quote</string>
     <string name="comment_text">Comment</string>
-    <string name="book_title_text">Book</string>
+    <string name="book_title_text"><u>Book</u></string>
     <string name="bookshelf">Your Bookshelf</string>
 </resources>
