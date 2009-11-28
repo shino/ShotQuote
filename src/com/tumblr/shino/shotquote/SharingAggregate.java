@@ -21,7 +21,6 @@ import java.io.FileNotFoundException;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -30,19 +29,16 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.text.TextUtils;
 import android.text.method.CharacterPickerDialog;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -79,6 +75,8 @@ public class SharingAggregate extends Activity implements OnClickListener{
 			imageUri = (Uri) bundle.get(Intent.EXTRA_STREAM);
 			U.debugLog(this, "URI from the intent", imageUri);
 			imageView.setImageURI(imageUri);
+		} else {
+			imageView.setImageResource(R.drawable.no_image);
 		}
 		
 		Button selectImage = (Button) findViewById(R.id.select_image_button);
@@ -153,35 +151,6 @@ public class SharingAggregate extends Activity implements OnClickListener{
 				startActivityForResult(selectBookIntent, INTENT_SELECT_BOOK);
 			}
 		});
-
-		Button postQuoteButton = (Button) findViewById(R.id.post_shotquote_button);
-		postQuoteButton.setOnClickListener(new OnClickListener() {
-			public void onClick(View v) {
-				U.debugLog(this, "ShotQuote button was pressed.", "Begin to post to Tumblr.");
-				PostingImageTask postingImageTask = new PostingImageTask(SharingAggregate.this);
-				SharingAggregate activity = SharingAggregate.this;
-				Book book = activity.selectedBook;
-				String title = book.getTitle();
-				String authors = book.getAuthor();
-				String url = book.getUrl();
-
-				StringBuilder caption = new StringBuilder();
-				caption.append("<a href=").append(url).append(">").append(title).append("</a>").append("<br />");
-				caption.append("by ").append(authors);
-				String pageNo = activity.getEditTextContent(R.id.page_no_edit_text);
-				if(pageNo !=null && pageNo.length() > 0){
-					caption.append(",<br />");
-					caption.append("at page ").append(pageNo);
-				}
-				String locationInPage = activity.getEditTextContent(R.id.location_in_page_edit_text);
-				if(locationInPage !=null && locationInPage.length() > 0){
-					caption.append(", ").append(locationInPage);
-				}
-				caption.append(".<br />");
-				postingImageTask.execute(new String[]{title, caption.toString()});
-			}
-		});
-
 	}
 	
 	public void onClick(View v) {
@@ -362,25 +331,25 @@ public class SharingAggregate extends Activity implements OnClickListener{
 	private static final int MENU_ITEM_NEW = 0;
 	private static final int MENU_ITEM_PREFERENCES = 1;
 	private static final int MENU_ITEM_BOOKSHELF = 2;
+	private static final int MENU_ITEM_POST_QUOTE = 3;
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
-		MenuItem item0 = menu.add(0, MENU_ITEM_NEW, 0, R.string.label_new);
-		item0.setIcon(android.R.drawable.ic_menu_add);
-		MenuItem item1 = menu.add(0, MENU_ITEM_PREFERENCES, 0, R.string.label_preferences);
-		item1.setIcon(android.R.drawable.ic_menu_preferences);
-		MenuItem item2 = menu.add(0, MENU_ITEM_BOOKSHELF, 0, R.string.label_bookshelf);
-		item2.setIcon(android.R.drawable.ic_menu_agenda);
+		MenuItem postMenu = menu.add(0, MENU_ITEM_POST_QUOTE, 0, R.string.post_quote);
+		postMenu.setIcon(android.R.drawable.ic_menu_upload);
+		MenuItem prefMenu = menu.add(0, MENU_ITEM_PREFERENCES, 0, R.string.label_preferences);
+		prefMenu.setIcon(android.R.drawable.ic_menu_preferences);
+		MenuItem bookshelfMenu = menu.add(0, MENU_ITEM_BOOKSHELF, 0, R.string.label_bookshelf);
+		bookshelfMenu.setIcon(android.R.drawable.ic_menu_agenda);
 		return true;
 	}
 	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item){
 		switch (item.getItemId()) {
-		case MENU_ITEM_NEW:
-			U.showDialog(this, "Menu button " + item.getTitle() + " is pressed.",
-				"Not yet implemented");
+		case MENU_ITEM_POST_QUOTE:
+			postQuote();
 			return true;
 		case MENU_ITEM_PREFERENCES:
 			Intent preferencesIntent = new Intent(this, SqPreferenceActivity.class);
@@ -395,6 +364,31 @@ public class SharingAggregate extends Activity implements OnClickListener{
 					"Not yet implemented");
 			return true;
 		}
+	}
+
+	private void postQuote(){
+		U.debugLog(this, "ShotQuote button was pressed.", "Begin to post to Tumblr.");
+		PostingImageTask postingImageTask = new PostingImageTask(SharingAggregate.this);
+		SharingAggregate activity = SharingAggregate.this;
+		Book book = activity.selectedBook;
+		String title = book.getTitle();
+		String authors = book.getAuthor();
+		String url = book.getUrl();
+
+		StringBuilder caption = new StringBuilder();
+		caption.append("<a href=").append(url).append(">").append(title).append("</a>").append("<br />");
+		caption.append("by ").append(authors);
+		String pageNo = activity.getEditTextContent(R.id.page_no_edit_text);
+		if(pageNo !=null && pageNo.length() > 0){
+			caption.append(",<br />");
+			caption.append("at page ").append(pageNo);
+		}
+		String locationInPage = activity.getEditTextContent(R.id.location_in_page_edit_text);
+		if(locationInPage !=null && locationInPage.length() > 0){
+			caption.append(", ").append(locationInPage);
+		}
+		caption.append(".<br />");
+		postingImageTask.execute(new String[]{title, caption.toString()});
 	}
 	
 	protected void onRestoreInstanceState(Bundle savedState) {

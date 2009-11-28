@@ -79,6 +79,7 @@
                 android:id="@+id/location_in_page_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingRight="8dp"
                 android:textAppearance="@style/label_text_appearance" />
             <Button
                 android:text="@string/select_location"
@@ -94,17 +95,24 @@
             android:hint="@string/location_in_page_hint">
         </EditText>
 
-        <TextView
-            android:text="@string/book_title_text"
-            android:id="@+id/book_title_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="@style/label_text_appearance" />
-        <Button
-            android:text="Select book"
-            android:id="@+id/select_book_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+        <LinearLayout
+             android:orientation="horizontal"
+             android:layout_width="fill_parent"
+             android:layout_height="wrap_content"
+             android:scrollbarAlwaysDrawVerticalTrack="true">
+			<TextView
+				 android:text="@string/book_title_text"
+				 android:id="@+id/book_title_label"
+				 android:layout_width="wrap_content"
+				 android:layout_height="wrap_content"
+				 android:paddingRight="8dp"
+				 android:textAppearance="@style/label_text_appearance" />
+			<Button
+				 android:text="Select book"
+				 android:id="@+id/select_book_button"
+				 android:layout_width="wrap_content"
+				 android:layout_height="wrap_content" />
+		</LinearLayout>
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="fill_parent"
@@ -138,12 +146,6 @@
                 android:textStyle="italic"
                 android:paddingLeft="10sp" />
         </LinearLayout>
-
-        <Button
-            android:text="@string/post_quote"
-            android:id="@+id/post_shotquote_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
 
     </LinearLayout>
 </ScrollView>
