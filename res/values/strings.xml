@@ -19,7 +19,7 @@
     <string name="message_posting">Posting...</string>
     <string name="message_no_image">No image.</string>
     <string name="message_error_occurred">Error occurred.</string>
-    <string name="message_book_not_found_for_ISBN">Book not Found for ISBN:</string>
+    <string name="message_book_not_found_for_ISBN">No book found for ISBN:</string>
     <string name="message_book_not_found">Book not Found. (Some error occurred, maybe)</string>
 	<string name="message_successfully_posted">Successfully posted: </string>
 	<string name="message_error_occurred_in_posting_to_tumblr">Error occurred in posting to Tumblr.</string>
