@@ -1,7 +1,8 @@
+# backup files
+# svn files
+*~
+.svn
+/.settings
 /bin
 /gen
-# backup files
-*~
 \#*\#
-# svn files
-.svn
