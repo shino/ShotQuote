@@ -17,4 +17,23 @@
     <item>4th paragraph</item>
     <item>5th paragraph</item>
   </string-array>
+
+  <string-array name="amazon_search_locale_names">
+    <item>English/UK [uk]</item>
+    <item>English/US [us]</item>
+    <item>French/Canada [ca]</item>
+    <item>French/France [fr]</item>
+    <item>German [de]</item>
+    <item>Japanese [jp]</item>
+    <item>Default []</item>
+  </string-array>
+  <string-array name="amazon_search_locale_values">
+    <item>uk</item>
+    <item>us</item>
+    <item>ca</item>
+    <item>fr</item>
+    <item>de</item>
+    <item>jp</item>
+    <item></item>
+  </string-array>
 </resources>

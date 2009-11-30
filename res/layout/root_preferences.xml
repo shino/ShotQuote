@@ -51,6 +51,17 @@
         />
     </PreferenceCategory>
 
+    <PreferenceCategory android:title="Amazon settings">
+        <ListPreference
+            android:key="amazon_search_locale"
+            android:title="Locale"
+            android:summary="Locale for amazon search"
+            android:dialogTitle="Locale (Amazon)"
+            android:entries="@array/amazon_search_locale_names"
+            android:entryValues="@array/amazon_search_locale_values"
+        />
+    </PreferenceCategory>
+
     <PreferenceCategory android:title="Post settings">
         <EditTextPreference
             android:key="post_generator"

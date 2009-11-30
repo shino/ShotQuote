@@ -21,14 +21,19 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.preference.PreferenceManager;
 import android.util.Xml;
 
 import com.tumblr.shino.shotquote.Bookshelf.BookSearchTask;
@@ -36,15 +41,31 @@ import com.tumblr.shino.shotquote.Bookshelf.BookSearchTask;
 
 public class Book implements Parcelable{
 	// private static final String AMAZON_JP_URL = "http://ecs.amazonaws.jp/onca/xml?";
-	private static final String AMAZON_JP_PROXY_URL = "http://honnomemo.appspot.com/rpaproxy/jp/?";
+	private static final String AMAZON_PROXY_URL = "http://honnomemo.appspot.com/rpaproxy/";
 	private static final String AMAZON_ACCESS_KEY = "AKIAIT2M2HIBZSYWPZHA";
-	private static final String AMAZON_URL = AMAZON_JP_PROXY_URL
-				+ "Service=AWSECommerceService" 
+	private static final String AMAZON_URL_PARAMS = "/?" 
+				+  "Service=AWSECommerceService" 
 				+ "&AWSAccessKeyId=" + AMAZON_ACCESS_KEY 
 				+ "&Operation=ItemLookup&IdType=EAN"
 				+ "&SearchIndex=Books"
 				+ "&ResponseGroup=Small"
 				+ "&ItemId=";
+
+	// Locale settings for Amazon search proxy.
+	// See http://honnomemo.appspot.com/rpaproxy/proxy_list for details.
+	private static final Map<String, String> amazonSearchLocales = new HashMap<String, String>() {
+		private static final long serialVersionUID = 1L;
+
+		{
+			put("en-US", "us");
+			put("en-GB", "uk");
+			put("fr-CA", "ca");
+			put("fr-FR", "fr");
+			put("de-DE", "de");
+			put("de-AT", "de");
+			put("ja-JP", "ja");
+		}
+	};
 
 	private int id;
 	private int status;
@@ -57,6 +78,20 @@ public class Book implements Parcelable{
 	public Book() {
 	}
 	
+	public static String defaultAmazonSearchLocale(Locale locale){
+		String language = locale.getLanguage();
+		String country = locale.getCountry();
+		String localeString = language + "-" + country;
+		U.debugLog(Book.class.getSimpleName(), "Device's locale",  localeString);
+		String searchLocale = amazonSearchLocales.get(localeString);
+		U.debugLog(Book.class.getSimpleName(), 
+				"Amazon search locale from language-country", localeString);
+		if(searchLocale != null) return searchLocale;
+		if(language.equals("fr")) return "fr";
+		if(language.equals("de")) return "de";
+		return "en";
+	}
+
 	/**
 	 * Search book by ISBN code.
 	 * 
@@ -81,8 +116,12 @@ public class Book implements Parcelable{
         
         HttpURLConnection connection = null;
         InputStream inputStream = null;
+    	SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        String locale = preferences.getString("amazon_search_locale", "");
+        if(locale == null || locale.equals("")) locale = Book.defaultAmazonSearchLocale(
+        		context.getResources().getConfiguration().locale);
         try {
-        	String urlString = AMAZON_URL + ean_code; 
+        	String urlString = AMAZON_PROXY_URL + locale + AMAZON_URL_PARAMS + ean_code; 
         	U.debugLog(context, "URL to search Amazon", urlString);
         	URL url = new URL(urlString);
             connection = (HttpURLConnection) url.openConnection();

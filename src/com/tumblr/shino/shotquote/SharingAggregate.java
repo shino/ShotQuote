@@ -18,6 +18,9 @@
 package com.tumblr.shino.shotquote;
 
 import java.io.FileNotFoundException;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -49,7 +52,7 @@ import com.tumblr.shino.shotquote.tumblr.TumblrImagePost;
  * Aggregate information to post a quote.
  * @author shino
  */
-public class SharingAggregate extends Activity implements OnClickListener{
+public class SharingAggregate extends Activity {
 	private static final int INTENT_SELECT_BOOK = 1;
 	private static final int INTENT_PREFERENCES = 2;	
 	private static final int INTENT_SELECT_IMAGE = 3;
@@ -151,13 +154,6 @@ public class SharingAggregate extends Activity implements OnClickListener{
 				startActivityForResult(selectBookIntent, INTENT_SELECT_BOOK);
 			}
 		});
-	}
-	
-	public void onClick(View v) {
-		CharacterPickerDialog dialog = new CharacterPickerDialog(getApplicationContext(),
-				new View(getApplicationContext()), null, "fugafuga", false);
-		dialog.show();
-
 		
 	}
 
