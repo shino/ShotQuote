@@ -47,7 +47,7 @@ public class BookArrayAdapeter extends ArrayAdapter<Book> {
 		TextView titleView = (TextView) view.findViewById(R.id.book_item_title);
 		titleView.setText(book.getTitle());
 		TextView authorsView = (TextView) view.findViewById(R.id.book_item_authors);
-		authorsView.setText(book.getAuthor());
+		authorsView.setText(book.getAuthors());
 		TextView isbnView = (TextView) view.findViewById(R.id.book_item_isbn);
 		isbnView.setText("[ISBN:" + book.getIsbn() + "]");
 		

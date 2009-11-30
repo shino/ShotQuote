@@ -73,7 +73,7 @@ public class Book implements Parcelable{
 	private int status;
 	private String isbn;
 	private String title;
-	private String author;
+	private String authors;
 	private String url;
 	private String extras;
 
@@ -170,7 +170,7 @@ public class Book implements Parcelable{
 
 				}
 			}
-			book.setAuthor(U.join(authors, ", "));
+			book.setAuthors(U.join(authors, ", "));
         	asyncTask.publishProgressAndSecondary(90, 100);
         	return book;
 		} finally {
@@ -190,12 +190,12 @@ public class Book implements Parcelable{
 		this.isbn = isbn;
 	}
 
-	public String getAuthor() {
-		return author;
+	public String getAuthors() {
+		return authors;
 	}
 
-	public void setAuthor(String author) {
-		this.author = author;
+	public void setAuthors(String authors) {
+		this.authors = authors;
 	}
 
 	public String getUrl() {
@@ -209,7 +209,7 @@ public class Book implements Parcelable{
 	public String toString() {
 		return "Book{ id: " + id + ", status: " + status 
 				+ ", isbn: " + isbn + ", title: " + title 
-				+ ", authors: " + author + "}";
+				+ ", authors: " + authors + "}";
 	}
 
 	public String getTitle() {
@@ -257,7 +257,7 @@ public class Book implements Parcelable{
 		out.writeInt(status);
 		out.writeString(isbn);
 		out.writeString(title);
-		out.writeString(author);
+		out.writeString(authors);
 		out.writeString(url);
 		out.writeString(extras);
 	}
@@ -268,7 +268,7 @@ public class Book implements Parcelable{
 		status = in.readInt();
 		isbn = in.readString();
 		title = in.readString();
-		author = in.readString();
+		authors = in.readString();
 		url = in.readString();
 		extras = in.readString();
 	}

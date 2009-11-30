@@ -50,7 +50,7 @@ public class BookDatabase {
 		ContentValues values = new ContentValues();
 		values.put("isbn", book.getIsbn());
 		values.put("status", STATUS_VALID);
-		values.put("authors", book.getAuthor());
+		values.put("authors", book.getAuthors());
 		values.put("url", book.getUrl());
 		values.put("title", book.getTitle());
 		db.beginTransaction();
@@ -106,7 +106,7 @@ public class BookDatabase {
 			book.setId(cursor.getInt(0));
 			book.setStatus(cursor.getInt(1));
 			book.setIsbn(cursor.getString(2));
-			book.setAuthor(cursor.getString(3));
+			book.setAuthors(cursor.getString(3));
 			book.setTitle(cursor.getString(4));
 			book.setUrl(cursor.getString(5));
 			book.setExtras(cursor.getString(6));

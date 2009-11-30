@@ -315,7 +315,7 @@ public class SharingAggregate extends Activity {
 		TextView titleTextView = (TextView) findViewById(R.id.book_item_title);
 		titleTextView.setText(selectedBook.getTitle());
 		TextView authersTextView = (TextView) findViewById(R.id.book_item_authors);
-		authersTextView.setText(selectedBook.getAuthor());
+		authersTextView.setText(selectedBook.getAuthors());
 		TextView isbnTextView = (TextView) findViewById(R.id.book_item_isbn);
 		isbnTextView.setText(selectedBook.getIsbn());
 	}
@@ -364,7 +364,7 @@ public class SharingAggregate extends Activity {
 		SharingAggregate activity = SharingAggregate.this;
 		Book book = activity.selectedBook;
 		String title = book.getTitle();
-		String authors = book.getAuthor();
+		String authors = book.getAuthors();
 		String url = book.getUrl();
 
 		StringBuilder caption = new StringBuilder();
