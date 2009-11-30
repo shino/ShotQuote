@@ -21,7 +21,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -120,6 +122,7 @@ public class Book implements Parcelable{
         String locale = preferences.getString("amazon_search_locale", "");
         if(locale == null || locale.equals("")) locale = Book.defaultAmazonSearchLocale(
         		context.getResources().getConfiguration().locale);
+        List<CharSequence> authors = new ArrayList<CharSequence>();
         try {
         	String urlString = AMAZON_PROXY_URL + locale + AMAZON_URL_PARAMS + ean_code; 
         	U.debugLog(context, "URL to search Amazon", urlString);
@@ -153,8 +156,9 @@ public class Book implements Parcelable{
 					} else if (tagName.equals("Author")) {
 						parser.next();
 						if (parser.getEventType() == XmlPullParser.TEXT) {
-							book.setAuthor(parser.getText());
-							U.debugLog(context, "author found", book.getAuthor());
+							String author = parser.getText();
+							authors.add(author);
+							U.debugLog(context, "author found", author);
 						}
 					} else if (tagName.equals("DetailPageURL")) {
 						parser.next();
@@ -166,6 +170,7 @@ public class Book implements Parcelable{
 
 				}
 			}
+			book.setAuthor(U.join(authors, ", "));
         	asyncTask.publishProgressAndSecondary(90, 100);
         	return book;
 		} finally {

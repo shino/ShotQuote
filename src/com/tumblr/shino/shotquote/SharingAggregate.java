@@ -18,9 +18,6 @@
 package com.tumblr.shino.shotquote;
 
 import java.io.FileNotFoundException;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -32,7 +29,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.text.method.CharacterPickerDialog;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -324,7 +320,7 @@ public class SharingAggregate extends Activity {
 		isbnTextView.setText(selectedBook.getIsbn());
 	}
 
-	private static final int MENU_ITEM_NEW = 0;
+//	private static final int MENU_ITEM_NEW = 0;
 	private static final int MENU_ITEM_PREFERENCES = 1;
 	private static final int MENU_ITEM_BOOKSHELF = 2;
 	private static final int MENU_ITEM_POST_QUOTE = 3;

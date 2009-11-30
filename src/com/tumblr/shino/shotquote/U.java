@@ -20,6 +20,8 @@ package com.tumblr.shino.shotquote;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Collection;
+import java.util.Iterator;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -34,6 +36,18 @@ import android.widget.Toast;
  */
 public class U {
 	
+	public static String join(Collection<CharSequence> tokens, CharSequence delimiter){
+		StringBuilder buffer = new StringBuilder();
+		Iterator<CharSequence> iter = tokens.iterator();
+	    while (iter.hasNext()) {
+	        buffer.append(iter.next());
+	        if (iter.hasNext()) {
+	        	buffer.append(delimiter);
+	        }
+	    }
+        return buffer.toString();
+	}
+
 	// decode Y, U, and V values on the YUV 420 buffer described as YCbCr_422_SP
 	// by Android
 	// David Manpearl 081201
