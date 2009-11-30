@@ -184,7 +184,6 @@ public class Bookshelf extends Activity {
 				bookDatabase.add(book);
 				return book;
 			} catch (Exception e) {
-	        	U.showDialog(activity, getString(R.string.message_error_occurred), e.toString());
 	        	U.errorLog(this, "Error occured in accessing Amazon", e);
 			}
         	return null;

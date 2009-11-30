@@ -65,7 +65,7 @@ public class Book implements Parcelable{
 			put("fr-FR", "fr");
 			put("de-DE", "de");
 			put("de-AT", "de");
-			put("ja-JP", "ja");
+			put("ja-JP", "jp");
 		}
 	};
 
@@ -119,12 +119,16 @@ public class Book implements Parcelable{
         HttpURLConnection connection = null;
         InputStream inputStream = null;
     	SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        String locale = preferences.getString("amazon_search_locale", "");
-        if(locale == null || locale.equals("")) locale = Book.defaultAmazonSearchLocale(
-        		context.getResources().getConfiguration().locale);
+        String searchLocale = preferences.getString("amazon_search_locale", "");
+        U.debugLog(Book.class, "Search locale in preference", searchLocale);
+        if(searchLocale == null || searchLocale.equals("")) {
+        	searchLocale = Book.defaultAmazonSearchLocale(
+        	        context.getResources().getConfiguration().locale);
+            U.debugLog(Book.class, "Use search locale", searchLocale);
+        }
         List<CharSequence> authors = new ArrayList<CharSequence>();
         try {
-        	String urlString = AMAZON_PROXY_URL + locale + AMAZON_URL_PARAMS + ean_code; 
+        	String urlString = AMAZON_PROXY_URL + searchLocale + AMAZON_URL_PARAMS + ean_code; 
         	U.debugLog(context, "URL to search Amazon", urlString);
         	URL url = new URL(urlString);
             connection = (HttpURLConnection) url.openConnection();
