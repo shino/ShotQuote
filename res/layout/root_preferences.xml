@@ -9,7 +9,7 @@
         <CheckBoxPreference
             android:key="tumblr1_enabled"
             android:title="enabled"
-            android:summary="Enable this account to post"
+            android:summary="Enable this account to post."
             android:dialogTitle="Enabled"
             android:defaultValue="true"
         />        
@@ -22,7 +22,7 @@
         <EditTextPreference
             android:key="tumblr1_password"
             android:title="Password"
-            android:summary="Your password address to use Tumblr"
+            android:summary="Your password address to use Tumblr."
             android:dialogTitle="Password"
             android:password="true"
         />
@@ -32,20 +32,20 @@
         <CheckBoxPreference
             android:key="tumblr2_enabled"
             android:title="enabled"
-            android:summary="Enable this account to post"
+            android:summary="Enable this account to post."
             android:dialogTitle="Enabled"
             android:defaultValue="false"
         />        
         <EditTextPreference
             android:key="tumblr2_email"
             android:title="e-mail"
-            android:summary="Your e-mail address to use Tumblr"
+            android:summary="Your e-mail address to use Tumblr."
             android:dialogTitle="E-mail"
         />
         <EditTextPreference
             android:key="tumblr2_password"
             android:title="Password"
-            android:summary="Your password address to use Tumblr"
+            android:summary="Your password address to use Tumblr."
             android:dialogTitle="Password"
             android:password="true"
         />
@@ -55,7 +55,7 @@
         <ListPreference
             android:key="amazon_search_locale"
             android:title="Locale"
-            android:summary="Locale for amazon search"
+            android:summary="Locale for amazon search."
             android:dialogTitle="Locale (Amazon)"
             android:entries="@array/amazon_search_locale_names"
             android:entryValues="@array/amazon_search_locale_values"
