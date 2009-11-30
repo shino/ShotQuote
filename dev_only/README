@@ -1,0 +1,11 @@
+README for dev_only directory
+  2009/11/30  created by Shun'ichi Shinohara
+
+I place files used in a development process are placed in this
+directory.
+
+In order to keep a release apk file small, I want to exclude these
+files in the apk file. When building by 1.6 SDK, this directory is NOT
+included properly. However I don't know this rule is accidental or
+not. If there is more standard and/or suitable directory name for such
+files, this directory's name should be renamed.
