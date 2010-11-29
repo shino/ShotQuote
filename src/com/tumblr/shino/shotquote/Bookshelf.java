@@ -21,6 +21,7 @@ import java.util.List;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -160,7 +161,11 @@ public class Bookshelf extends Activity {
         Intent barcodeReaderIntent = new Intent("com.google.zxing.client.android.SCAN");
         barcodeReaderIntent.putExtra("SCAN_MODE", "ONE_D_MODE");
         // TODO: Confirm Barcode Scanner is installed here.
-        startActivityForResult(barcodeReaderIntent, INTENT_BARCODE_SCAN);
+        try {
+        	startActivityForResult(barcodeReaderIntent, INTENT_BARCODE_SCAN);
+		} catch (ActivityNotFoundException notfound) {
+			U.showDialog(this, "ERROR", "Barcode scanner is needed. Install some app.");
+		}        	
 	}
 	
 	public class BookSearchTask extends AsyncTask<Intent, Integer, Book>{
