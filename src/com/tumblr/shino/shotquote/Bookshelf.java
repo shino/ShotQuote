@@ -141,6 +141,7 @@ public class Bookshelf extends Activity {
 				bookDatabase.delete(selectedBook);
 				bookListAdapter.remove(selectedBook);
 				bookListView.setAdapter(bookListAdapter);
+				U.showToast(this, "Deleted: " + selectedBook.getTitle());
 				return true;
     		case CONTEXT_ITEM_BOOK_SHARE:
 				U.debugLog(this, "Menu \"Share\" is selected", selectedBook);
@@ -180,7 +181,7 @@ public class Bookshelf extends Activity {
 		    progressDialog.setIndeterminate(false);
 		    progressDialog.setMax(100);
 		    progressDialog.show();
-		    this.publishProgressAndSecondary(10, 50);
+		    this.publishProgressAndSecondary(10, 10);
 		}
 
 		@Override
@@ -206,7 +207,7 @@ public class Bookshelf extends Activity {
 		    
 		    if (book != null && book.getTitle() != null) {
 	        	activity.bookListAdapter.insert(book, 0);
-	        	activity.bookListView.setAdapter(bookListAdapter);
+	        	activity.bookListView.setAdapter(activity.bookListAdapter);
 	        	activity.bookListView.invalidate();
 		    } else if(book != null && book.getTitle() == null) {
 		        Toast toast = Toast.makeText(activity,

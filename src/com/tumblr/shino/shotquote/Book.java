@@ -69,7 +69,7 @@ public class Book implements Parcelable{
 		}
 	};
 
-	private int id;
+	private long id;
 	private int status;
 	private String isbn;
 	private String title;
@@ -193,7 +193,7 @@ public class Book implements Parcelable{
 				}
 			}
 			book.setAuthors(U.join(authors, ", "));
-        	asyncTask.publishProgressAndSecondary(90, 100);
+        	asyncTask.publishProgressAndSecondary(90, 90);
         	return book;
 		} finally {
 			try {
@@ -242,11 +242,11 @@ public class Book implements Parcelable{
 		this.title = title;
 	}
 
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
@@ -275,7 +275,7 @@ public class Book implements Parcelable{
 	}
 	
 	public void writeToParcel(Parcel out, int flags) {
-		out.writeInt(id);
+		out.writeLong(id);
 		out.writeInt(status);
 		out.writeString(isbn);
 		out.writeString(title);
@@ -286,7 +286,7 @@ public class Book implements Parcelable{
 	
 	public void readFromParcel(Parcel in) {
 		U.debugLog(this, "Book constructor (from percel)", in);
-		id = in.readInt();
+		id = in.readLong();
 		status = in.readInt();
 		isbn = in.readString();
 		title = in.readString();

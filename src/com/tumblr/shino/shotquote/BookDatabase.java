@@ -59,6 +59,7 @@ public class BookDatabase {
 			if(result >= 0){
 				db.setTransactionSuccessful();			
 				U.debugLog(this, "Book was inserted", values);
+				book.setId(result);
 			} else {
 				throw new RuntimeException("Book inseartion failed. Result value is :" + result);
 			}
@@ -74,7 +75,7 @@ public class BookDatabase {
 	public void delete(Book book) {
 		db.beginTransaction();
 		try {
-			long result = db.delete(DB_TABLE, "id=?", new String[]{Integer.toString(book.getId())});
+			long result = db.delete(DB_TABLE, "id=?", new String[]{Long.toString(book.getId())});
 			if(result == 1){
 				db.setTransactionSuccessful();
 				U.debugLog(this, "Book was deleted", book.getId() + ":" + book.getTitle());
@@ -103,7 +104,7 @@ public class BookDatabase {
 				return books;
 			}
 			Book book = new Book();
-			book.setId(cursor.getInt(0));
+			book.setId(cursor.getLong(0));
 			book.setStatus(cursor.getInt(1));
 			book.setIsbn(cursor.getString(2));
 			book.setAuthors(cursor.getString(3));
