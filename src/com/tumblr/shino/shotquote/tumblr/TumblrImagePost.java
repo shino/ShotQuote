@@ -25,8 +25,13 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.net.HttpURLConnection;
-import java.net.URI;
 import java.net.URL;
+
+import com.tumblr.shino.shotquote.SharingAggregate;
+import com.tumblr.shino.shotquote.U;
+
+import android.content.Context;
+import android.net.Uri;
 
 public class TumblrImagePost {
 
@@ -40,12 +45,18 @@ public class TumblrImagePost {
 	private String title;
 	private String caption;
 	private String generator;
-	private String fileUri;
+	private Uri fileUri;
+	private long fileSize;
 	private String mimeType;
 	private InputStream fileInputStream;
 	
 	private String postId;
 	private Exception error;
+	
+	private SharingAggregate.PostingImageTask task;
+	private Context context;
+	private int min;
+	private int max;
 
     public TumblrImagePost(String email, String password, String hostname){
     	this.email = email;
@@ -57,20 +68,28 @@ public class TumblrImagePost {
     	return post(title, caption, generator, fileUri, mimeType, fileInputStream);
     }
     
+    public String post(SharingAggregate.PostingImageTask task, Context context, int min, int max) throws Exception {
+    	this.task = task;
+    	this.context = context;
+    	this.min = min;
+    	this.max = max;
+    	return post(title, caption, generator, fileUri, mimeType, fileInputStream);
+    }
+    
     /**
      * 
      * @param title
      * @param caption
      * @param generator
-     * @param fileUriString
+     * @param fileUri
      * @param mimeType
      * @param fileInputStream
      * @return Post ID
      * @throws Exception
      */
     public String post(String title, String caption, String generator,
-    		String fileUriString, String mimeType, InputStream fileInputStream) throws Exception {
-        OutputStream os = null;
+    		Uri fileUri, String mimeType, InputStream fileInputStream) throws Exception {
+    	OutputStream os = null;
         InputStream is = null;
         HttpURLConnection uc = null;
         try {
@@ -81,7 +100,7 @@ public class TumblrImagePost {
             uc.setDoOutput(true);
 
             os = uc.getOutputStream();
-            writeRequest(os, title, caption, generator, fileUriString, mimeType, fileInputStream);
+            writeRequest(os, title, caption, generator, fileUri, mimeType, fileInputStream);
             
             is = uc.getInputStream();
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
@@ -111,23 +130,14 @@ public class TumblrImagePost {
         }
     }
 
-    public String post(String title, String caption, String generator,
-    		String fileUriString, InputStream fileInputStream) throws Exception {
-        String mimeType = HttpURLConnection.guessContentTypeFromName(fileUriString);
-    	return post(title, caption, generator, fileUriString, mimeType, fileInputStream);
-    }
-  	public String post(String title, String caption, String generator, URI fileUri) throws Exception {
-    	return post(title, caption, generator, fileUri.toString(), fileUri.toURL().openStream());
-    }
-
-	public void writeRequest(OutputStream os, String title, String body, String generator,
-			String fileUriString, InputStream fileInputStream) throws IOException {
-        String mimeType = HttpURLConnection.guessContentTypeFromName(fileUriString);
-        writeRequest(os, title, body, generator, fileUriString, mimeType, fileInputStream);
+    public void writeRequest(OutputStream os, String title, String body, String generator,
+			Uri fileUri, InputStream fileInputStream) throws IOException {
+        String mimeType = HttpURLConnection.guessContentTypeFromName(fileUri.toString());
+        writeRequest(os, title, body, generator, fileUri, mimeType, fileInputStream);
 	}
 	
 	public void writeRequest(OutputStream os, String title, String body, String generator,
-			String fileUriString, String mimeType, InputStream fileInputStream) throws IOException {
+			Uri fileUri, String mimeType, InputStream fileInputStream) throws IOException {
 		
         Writer writer = new OutputStreamWriter(os, "UTF-8");
         
@@ -138,6 +148,7 @@ public class TumblrImagePost {
         writeContentDisposition(writer, "caption", body);
         writeContentDisposition(writer, "generator", generator);
 
+        String fileUriString = fileUri.toString();
         int positionOfLastSeparator = fileUriString.lastIndexOf(File.separatorChar);
         String fileName = fileUriString.substring(positionOfLastSeparator + 1);
         writeContentDispositionOfFile(writer, "data", fileName, mimeType);
@@ -152,11 +163,6 @@ public class TumblrImagePost {
         
 	}
 	
-	public void writeRequest(OutputStream os, String title, String body,
-			String generator, URI fileUri) throws IOException {
-		writeRequest(os, title, body, generator, fileUri.toString(), fileUri.toURL().openStream());
-	}
-
 	public void writeContentDisposition(Writer writer, String name,
 			String value) throws IOException {
 		writer.write(BOUNDARY);
@@ -186,9 +192,17 @@ public class TumblrImagePost {
 	
 	public void writeFileContents(OutputStream outputStream, InputStream fileInputStream) throws IOException {
         byte[] tmp = new byte[1024];
+        float remain = fileSize * 1.0f;
+    	U.debugLog(context, "fileSize", Long.toString(fileSize));
+    	U.debugLog(context, "remain", Float.toString(remain));
         int len = -1;
         while ((len = fileInputStream.read(tmp)) >= 0) {
+        	U.debugLog(context, "len", Integer.toString(len));
+            remain -= len;
             outputStream.write(tmp, 0, len);
+            int progress = (int)((min - max) * (remain/(fileSize)) + max);
+        	U.debugLog(context, "progress", Integer.toString(progress));
+            task.publishProgressAndSecondary(progress, progress);
         }
         outputStream.flush();
 	}
@@ -217,11 +231,11 @@ public class TumblrImagePost {
 		this.generator = generator;
 	}
 
-	public String getFileUri() {
+	public Uri getFileUri() {
 		return fileUri;
 	}
 
-	public void setFileUri(String fileUri) {
+	public void setFileUri(Uri fileUri) {
 		this.fileUri = fileUri;
 	}
 
@@ -231,6 +245,14 @@ public class TumblrImagePost {
 
 	public void setMimeType(String mimeType) {
 		this.mimeType = mimeType;
+	}
+
+	public long getFileSize() {
+		return fileSize;
+	}
+
+	public void setFileSize(long fileSize) {
+		this.fileSize = fileSize;
 	}
 
 	public InputStream getFileInputStream() {

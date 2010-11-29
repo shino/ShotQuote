@@ -26,6 +26,7 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.AssetFileDescriptor;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -206,15 +207,15 @@ public class SharingAggregate extends Activity {
 		    	TumblrImagePost post1 = createPost(preferences, "tumblr1");
 		    	TumblrImagePost post2 = createPost(preferences, "tumblr2");
 		    	if(post1 != null) {
-					postImage(post1, preferences, args);
-					if(post2 != null) {
-					    this.publishProgressAndSecondary(50, 50);
-					}
+		    		int max = post2 == null ? 70 : 40;
+					postImage(post1, preferences, 10, max, args);
+				    this.publishProgressAndSecondary(max, max);
 		    	}
 		    	if(post2 != null) {
-					postImage(post2, preferences, args);		    		
+		    		int min = post1 == null ? 10 : 40;
+					postImage(post2, preferences, min, 70, args);
 		    	}
-			    this.publishProgressAndSecondary(90, 90);
+			    this.publishProgressAndSecondary(70, 70);
 				return new TumblrImagePost[]{post1, post2};
 			} catch (Exception e) {
 				U.errorLog(this, "Error in posting to www.tumblr.com", e);
@@ -223,19 +224,22 @@ public class SharingAggregate extends Activity {
 		}
 
 		private String postImage(TumblrImagePost post,
-				SharedPreferences preferences, String... args)
+				SharedPreferences preferences, int min, int max,
+				String... args)
 				throws FileNotFoundException, Exception {
 			try {
 				post.setTitle(args[0]);
 				post.setCaption(args[1]);
-				post.setFileUri(imageUri.toString());
+				post.setFileUri(imageUri);
 				String mimeType = getContentResolver().getType(imageUri);
 				post.setMimeType(mimeType);
 				String generator = preferences.getString("post_generator", "ShotQuote Android");
 				post.setGenerator(generator);
+				AssetFileDescriptor afd = getContentResolver().openAssetFileDescriptor(imageUri, "r");
+				post.setFileSize(afd.getLength());
 				post.setFileInputStream(getContentResolver().openInputStream(imageUri));
 
-				String postId = post.post();
+				String postId = post.post(this, SharingAggregate.this, min, max);
 				return postId;
 			} catch (Exception e) {
 				U.errorLog(this, "postImage", e);
@@ -256,7 +260,8 @@ public class SharingAggregate extends Activity {
 
 		@Override
 		protected void onPostExecute(TumblrImagePost[] posts) {
-		    progressDialog.dismiss();
+		    progressDialog.setProgress(100);
+		    progressDialog.setSecondaryProgress(100);
 
 		    for (int i = 0; i < posts.length; i++) {
 				TumblrImagePost post = posts[i];
@@ -270,6 +275,7 @@ public class SharingAggregate extends Activity {
 			    }
 				
 			}
+		    progressDialog.dismiss();
 		}
 
 		@Override
