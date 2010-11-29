@@ -212,17 +212,23 @@ public class SharingAggregate extends Activity {
 		private String postImage(TumblrImagePost post,
 				SharedPreferences preferences, String... args)
 				throws FileNotFoundException, Exception {
-			post.setTitle(args[0]);
-			post.setCaption(args[1]);
-			post.setFileUri(imageUri.toString());
-			String mimeType = getContentResolver().getType(imageUri);
-			post.setMimeType(mimeType);
-			String generator = preferences.getString("post_generator", "ShotQuote Android");
-			post.setGenerator(generator);
-			post.setFileInputStream(getContentResolver().openInputStream(imageUri));
+			try {
+				post.setTitle(args[0]);
+				post.setCaption(args[1]);
+				post.setFileUri(imageUri.toString());
+				String mimeType = getContentResolver().getType(imageUri);
+				post.setMimeType(mimeType);
+				String generator = preferences.getString("post_generator", "ShotQuote Android");
+				post.setGenerator(generator);
+				post.setFileInputStream(getContentResolver().openInputStream(imageUri));
 
-			String postId = post.post();
-			return postId;
+				String postId = post.post();
+				return postId;
+			} catch (Exception e) {
+				U.errorLog(this, "postImage", e);
+				post.setError(e);
+				return null;
+			}
 		}
 
 		private TumblrImagePost createPost(SharedPreferences preferences, String accountPrefix) {
@@ -245,7 +251,7 @@ public class SharingAggregate extends Activity {
 			    if (post.getError() == null) {
 			    	U.showToast(activity, getString(R.string.message_successfully_posted) + post.getPostId());
 			    } else {
-			    	U.showToast(activity, R.string.message_error_occurred_in_posting_to_tumblr);
+			    	U.showDialog(activity, "ERROR occuered", "Confirm username/password or network connection.");
 			    	U.errorLog(this, "Error occuered in posting to Tumblr.", post.getError());
 			    }
 				
@@ -360,26 +366,34 @@ public class SharingAggregate extends Activity {
 
 	private void postQuote(){
 		U.debugLog(this, "ShotQuote button was pressed.", "Begin to post to Tumblr.");
+		if(SharingAggregate.this.imageUri == null) {
+			U.showDialog(this, "Image not selected", "Select image by \"pick\" button");
+			return;
+		}
 		PostingImageTask postingImageTask = new PostingImageTask(SharingAggregate.this);
 		SharingAggregate activity = SharingAggregate.this;
 		Book book = activity.selectedBook;
-		String title = book.getTitle();
-		String authors = book.getAuthors();
-		String url = book.getUrl();
-
+		String title = "";
 		StringBuilder caption = new StringBuilder();
-		caption.append("<a href=").append(url).append(">").append(title).append("</a>").append("<br />");
-		caption.append("by ").append(authors);
-		String pageNo = activity.getEditTextContent(R.id.page_no_edit_text);
-		if(pageNo !=null && pageNo.length() > 0){
-			caption.append(",<br />");
-			caption.append("at page ").append(pageNo);
+
+		if(book != null) {
+			title = book.getTitle();
+			String authors = book.getAuthors();
+			String url = book.getUrl();
+
+			caption.append("<a href=").append(url).append(">").append(title).append("</a>").append("<br />");
+			caption.append("by ").append(authors);
+			String pageNo = activity.getEditTextContent(R.id.page_no_edit_text);
+			if(pageNo !=null && pageNo.length() > 0){
+				caption.append(",<br />");
+				caption.append("at page ").append(pageNo);
+			}
+			String locationInPage = activity.getEditTextContent(R.id.location_in_page_edit_text);
+			if(locationInPage !=null && locationInPage.length() > 0){
+				caption.append(", ").append(locationInPage);
+			}
+			caption.append(".<br />");
 		}
-		String locationInPage = activity.getEditTextContent(R.id.location_in_page_edit_text);
-		if(locationInPage !=null && locationInPage.length() > 0){
-			caption.append(", ").append(locationInPage);
-		}
-		caption.append(".<br />");
 		postingImageTask.execute(new String[]{title, caption.toString()});
 	}
 	
