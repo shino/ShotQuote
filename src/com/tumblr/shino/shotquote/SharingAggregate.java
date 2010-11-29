@@ -22,6 +22,7 @@ import java.io.FileNotFoundException;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -85,7 +86,11 @@ public class SharingAggregate extends Activity {
 			public void onClick(View v) {
 				Intent selectImageIntent = new Intent(Intent.ACTION_GET_CONTENT);
 				selectImageIntent.setType("image/*");
-				startActivityForResult(selectImageIntent, INTENT_SELECT_IMAGE);
+				try {
+					startActivityForResult(selectImageIntent, INTENT_SELECT_IMAGE);
+				} catch (ActivityNotFoundException notfound) {
+					U.showDialog(SharingAggregate.this, "ERROR", "No suitable application to select an image.");
+				}
 			}
 		});
 		
@@ -100,7 +105,11 @@ public class SharingAggregate extends Activity {
 				Intent selectImageIntent = new Intent("com.android.camera.action.CROP");
 				selectImageIntent.putExtra("aspectX", 1);
 				selectImageIntent.setData(imageUri);
-				startActivityForResult(selectImageIntent, INTENT_EDIT_IMAGE);
+				try {
+					startActivityForResult(selectImageIntent, INTENT_EDIT_IMAGE);
+				} catch (ActivityNotFoundException notfound) {
+					U.showDialog(SharingAggregate.this, "ERROR", "No suitable application to crop an image.");
+				}
 			}
 		});
 
@@ -114,7 +123,11 @@ public class SharingAggregate extends Activity {
 				
 				Intent selectImageIntent = new Intent(Intent.ACTION_VIEW);
 				selectImageIntent.setData(imageUri);
-				startActivityForResult(selectImageIntent, INTENT_VIEW_IMAGE);
+				try {
+					startActivityForResult(selectImageIntent, INTENT_VIEW_IMAGE);
+				} catch (ActivityNotFoundException notfound) {
+					U.showDialog(SharingAggregate.this, "ERROR", "No suitable application to view an image.");
+				}
 			}
 		});
 
