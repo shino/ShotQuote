@@ -164,6 +164,24 @@ public class Book implements Parcelable{
 							authors.add(author);
 							U.debugLog(context, "author found", author);
 						}
+					} else if (tagName.equals("Creator")) {
+						String role = null;
+						for (int i = 0; i < parser.getAttributeCount(); i++) {
+							if(parser.getAttributeName(i).equals("Role")){
+								role = parser.getAttributeValue(i);
+								U.debugLog(context, "Role found", role);
+								break;
+							}
+						}
+						parser.next();
+						if (parser.getEventType() == XmlPullParser.TEXT) {
+							String creator = parser.getText();
+							if(role != null) {
+								creator = creator + " (" + role + ")";
+							}
+							authors.add(creator);
+							U.debugLog(context, "creator found", creator);
+						}
 					} else if (tagName.equals("DetailPageURL")) {
 						parser.next();
 						if (parser.getEventType() == XmlPullParser.TEXT) {
