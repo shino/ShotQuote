@@ -29,7 +29,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ContextMenu.ContextMenuInfo;
-import android.view.MenuItem.OnMenuItemClickListener;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -59,7 +58,8 @@ public class Bookshelf extends Activity {
 		setContentView(R.layout.bookshelf);
 
 		bookListView = (ListView) findViewById(R.id.bookshelf_list);
-		bookDatabase = new BookDatabase(this);
+        registerForContextMenu(bookListView);
+    			bookDatabase = new BookDatabase(this);
 		List<Book> books = bookDatabase.allBooks();
 		bookListAdapter = new BookArrayAdapeter(this, R.layout.book_item, books);
 		bookListView.setAdapter(bookListAdapter);
@@ -73,8 +73,8 @@ public class Bookshelf extends Activity {
 		        U.debugLog(this, "Clicked item is the book", book);
 		        U.debugLog(this, "Clicked item's view", bookView);
 		        selectedBook = book;
-		        registerForContextMenu(bookView);
 		        bookView.showContextMenu();
+		        registerForContextMenu(bookListView);
 		    }
 		});
 		
@@ -121,31 +121,28 @@ public class Bookshelf extends Activity {
     		final ContextMenuInfo menuInfo) {
     	super.onCreateContextMenu(menu, view, menuInfo);
     	unregisterForContextMenu(view);
-    	MenuItem itemChoose = menu.add(0, CONTEXT_ITEM_BOOK_SELECT, 0, R.string.label_select);
-    	itemChoose.setOnMenuItemClickListener(new OnMenuItemClickListener(){
-			public boolean onMenuItemClick(MenuItem item) {
+    	menu.add(0, CONTEXT_ITEM_BOOK_SELECT, 0, R.string.label_select);
+    	menu.add(0, CONTEXT_ITEM_BOOK_DELETE, 0, R.string.label_delete);
+    	menu.add(0, CONTEXT_ITEM_BOOK_SHARE, 0, R.string.label_share);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+    	switch (item.getItemId()) {
+    		case CONTEXT_ITEM_BOOK_SELECT:
 				U.debugLog(this, "Menu \"Select\" is selected", selectedBook);
 				Intent selectResult = new Intent();
 				selectResult.putExtra(DATA_BOOK_INFORMATION, selectedBook);
 				setResult(RESULT_OK, selectResult);
 				finish();
 				return true;
-			}
-    	});
-    	MenuItem itemDelete = menu.add(0, CONTEXT_ITEM_BOOK_DELETE, 0, R.string.label_delete);
-    	itemDelete.setOnMenuItemClickListener(new OnMenuItemClickListener(){
-			public boolean onMenuItemClick(MenuItem item) {
+    		case CONTEXT_ITEM_BOOK_DELETE:
 				U.debugLog(this, "Menu \"Delete\" is selected", selectedBook);
 				bookDatabase.delete(selectedBook);
 				bookListAdapter.remove(selectedBook);
 				bookListView.setAdapter(bookListAdapter);
-				
 				return true;
-			}
-    	});
-    	MenuItem itemShare = menu.add(0, CONTEXT_ITEM_BOOK_SHARE, 0, R.string.label_share);
-    	itemShare.setOnMenuItemClickListener(new OnMenuItemClickListener(){
-			public boolean onMenuItemClick(MenuItem item) {
+    		case CONTEXT_ITEM_BOOK_SHARE:
 				U.debugLog(this, "Menu \"Share\" is selected", selectedBook);
 				Intent shareIntent = new Intent(android.content.Intent.ACTION_SEND);
 				shareIntent.setType("text/plain");
@@ -153,10 +150,11 @@ public class Bookshelf extends Activity {
 				shareIntent.putExtra(android.content.Intent.EXTRA_TEXT, selectedBook.getUrl() + " " + selectedBook.getAuthors());
 				startActivity(shareIntent);
 				return true;
-			}
-    	});
+    		default:
+    			return false;
+    	}
     }
-
+      	
 	private void scanBookBarcode(){
         Intent barcodeReaderIntent = new Intent("com.google.zxing.client.android.SCAN");
         barcodeReaderIntent.putExtra("SCAN_MODE", "ONE_D_MODE");
