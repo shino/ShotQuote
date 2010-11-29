@@ -12,6 +12,7 @@
     <string name="label_bookshelf">Bookshelf</string>
     <string name="label_select">Select</string>
     <string name="label_delete">Delete</string>
+    <string name="label_deleted">Deleted</string>
     <string name="label_share">Share</string>
     <string name="label_edit">Edit</string>
     
@@ -24,7 +25,15 @@
     <string name="message_book_not_found">Book not Found. (Some error occurred, maybe)</string>
 	<string name="message_successfully_posted">Successfully posted: </string>
 	<string name="message_error_occurred_in_posting_to_tumblr">Error occurred in posting to Tumblr.</string>
-
+    
+    <string name="message_confirm_account">Confirm username, password or network connection.</string>
+    <string name="message_select_image_by_pick">Select image by "pick" button</string>
+    
+    <string name="message_no_image_select_app">No suitable application to select an image.</string>
+    <string name="message_no_image_crop_app">No suitable application to select an image.</string>
+    <string name="message_no_image_view_app">No suitable application to select an image.</string>
+    <string name="message_no_barcode_scanner">Barcode scanner is needed. Install some application.</string>
+    
     <string name="app_name">ShotQuote</string>
     <string name="hello">Hi, Welcome to ShotQuote on Android.</string>
     <string name="share">ShotQuote</string>

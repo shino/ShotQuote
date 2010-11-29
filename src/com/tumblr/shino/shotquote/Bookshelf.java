@@ -142,7 +142,7 @@ public class Bookshelf extends Activity {
 				bookDatabase.delete(selectedBook);
 				bookListAdapter.remove(selectedBook);
 				bookListView.setAdapter(bookListAdapter);
-				U.showToast(this, "Deleted: " + selectedBook.getTitle());
+				U.showToast(this, getString(R.string.label_deleted) + ": " + selectedBook.getTitle());
 				return true;
     		case CONTEXT_ITEM_BOOK_SHARE:
 				U.debugLog(this, "Menu \"Share\" is selected", selectedBook);
@@ -160,12 +160,11 @@ public class Bookshelf extends Activity {
 	private void scanBookBarcode(){
         Intent barcodeReaderIntent = new Intent("com.google.zxing.client.android.SCAN");
         barcodeReaderIntent.putExtra("SCAN_MODE", "ONE_D_MODE");
-        // TODO: Confirm Barcode Scanner is installed here.
         try {
         	startActivityForResult(barcodeReaderIntent, INTENT_BARCODE_SCAN);
 		} catch (ActivityNotFoundException notfound) {
-			U.showDialog(this, "ERROR", "Barcode scanner is needed. Install some app.");
-		}        	
+			U.showDialog(this, "ERROR", getString(R.string.message_no_barcode_scanner));
+		}
 	}
 	
 	public class BookSearchTask extends AsyncTask<Intent, Integer, Book>{

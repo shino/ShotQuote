@@ -89,7 +89,7 @@ public class SharingAggregate extends Activity {
 				try {
 					startActivityForResult(selectImageIntent, INTENT_SELECT_IMAGE);
 				} catch (ActivityNotFoundException notfound) {
-					U.showDialog(SharingAggregate.this, "ERROR", "No suitable application to select an image.");
+					U.showDialog(SharingAggregate.this, "ERROR", getString(R.string.message_no_image_select_app));
 				}
 			}
 		});
@@ -108,7 +108,7 @@ public class SharingAggregate extends Activity {
 				try {
 					startActivityForResult(selectImageIntent, INTENT_EDIT_IMAGE);
 				} catch (ActivityNotFoundException notfound) {
-					U.showDialog(SharingAggregate.this, "ERROR", "No suitable application to crop an image.");
+					U.showDialog(SharingAggregate.this, "ERROR", getString(R.string.message_no_image_crop_app));
 				}
 			}
 		});
@@ -126,7 +126,7 @@ public class SharingAggregate extends Activity {
 				try {
 					startActivityForResult(selectImageIntent, INTENT_VIEW_IMAGE);
 				} catch (ActivityNotFoundException notfound) {
-					U.showDialog(SharingAggregate.this, "ERROR", "No suitable application to view an image.");
+					U.showDialog(SharingAggregate.this, "ERROR", getString(R.string.message_no_image_view_app));
 				}
 			}
 		});
@@ -264,7 +264,8 @@ public class SharingAggregate extends Activity {
 			    if (post.getError() == null) {
 			    	U.showToast(activity, getString(R.string.message_successfully_posted) + post.getPostId());
 			    } else {
-			    	U.showDialog(activity, "ERROR occuered", "Confirm username/password or network connection.");
+			    	U.showDialog(activity, getString(R.string.message_error_occurred),
+			    			getString(R.string.message_confirm_account));
 			    	U.errorLog(this, "Error occuered in posting to Tumblr.", post.getError());
 			    }
 				
@@ -380,7 +381,8 @@ public class SharingAggregate extends Activity {
 	private void postQuote(){
 		U.debugLog(this, "ShotQuote button was pressed.", "Begin to post to Tumblr.");
 		if(SharingAggregate.this.imageUri == null) {
-			U.showDialog(this, "Image not selected", "Select image by \"pick\" button");
+			U.showDialog(this, getString(R.string.message_no_image),
+					getString(R.string.message_select_image_by_pick));
 			return;
 		}
 		PostingImageTask postingImageTask = new PostingImageTask(SharingAggregate.this);
