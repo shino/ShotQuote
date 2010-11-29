@@ -115,6 +115,7 @@ public class Bookshelf extends Activity {
 
 	final static int CONTEXT_ITEM_BOOK_SELECT = 1000;
 	final static int CONTEXT_ITEM_BOOK_DELETE = 1001;
+	final static int CONTEXT_ITEM_BOOK_SHARE = 1002;
     //コンテキストメニューが生成される時に起動される
     public void onCreateContextMenu(ContextMenu menu, final View view,
     		final ContextMenuInfo menuInfo) {
@@ -139,6 +140,18 @@ public class Bookshelf extends Activity {
 				bookListAdapter.remove(selectedBook);
 				bookListView.setAdapter(bookListAdapter);
 				
+				return true;
+			}
+    	});
+    	MenuItem itemShare = menu.add(0, CONTEXT_ITEM_BOOK_SHARE, 0, R.string.label_share);
+    	itemShare.setOnMenuItemClickListener(new OnMenuItemClickListener(){
+			public boolean onMenuItemClick(MenuItem item) {
+				U.debugLog(this, "Menu \"Share\" is selected", selectedBook);
+				Intent shareIntent = new Intent(android.content.Intent.ACTION_SEND);
+				shareIntent.setType("text/plain");
+				shareIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, selectedBook.getTitle());
+				shareIntent.putExtra(android.content.Intent.EXTRA_TEXT, selectedBook.getUrl() + " " + selectedBook.getAuthors());
+				startActivity(shareIntent);
 				return true;
 			}
     	});
